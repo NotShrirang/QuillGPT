@@ -1,9 +1,9 @@
 import torch
-from models.bigram import BigramLanguageModel
+from core.bigram import BigramLanguageModel
 from utils.preprocessing import Encoder, DataLoader
 
 batch_size = 32
-block_size = 8
+block_size = 64
 max_iters = 300
 eval_interval = 30
 learning_rate = 1e-4
@@ -19,7 +19,8 @@ encoder = Encoder(data_loader.data, type='word')
 vocab_size = encoder.vocab_size
 
 model = BigramLanguageModel(vocab_size, n_embd, block_size).to(device)
-state_dict = torch.load('model.pt', map_location=device)
+state_dict = torch.load(
+    './saved_models/model_context64.pt', map_location=device)
 
 model.load_state_dict(state_dict)
 context = torch.zeros((1, 1), dtype=torch.long, device=device)

@@ -1,4 +1,4 @@
-from models.bigram import BigramLanguageModel
+from core.bigram import BigramLanguageModel
 from utils.preprocessing import Encoder, DataLoader
 from torch import nn
 import torch
