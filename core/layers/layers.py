@@ -31,7 +31,8 @@ class MultiHeadAttentionLayer(nn.Module):
     def __init__(self, n_embd, num_heads, head_size) -> None:
         super().__init__()
         self.heads = nn.ModuleList(
-            [SelfAttentionLayer(n_embd, head_size, head_size, 0.1) for _ in range(num_heads)])
+            [SelfAttentionLayer(n_embd, head_size, head_size, 0.1)
+             for _ in range(num_heads)])
         self.linear = nn.Linear(num_heads * head_size, head_size)
         self.dropout = nn.Dropout(0.1)
 

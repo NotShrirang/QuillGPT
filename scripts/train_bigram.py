@@ -1,4 +1,4 @@
-from core.bigram import BigramLanguageModel
+from core.models.bigram import BigramLanguageModel
 from utils.preprocessing import Encoder, DataLoader
 from torch import nn
 import torch
@@ -55,7 +55,8 @@ for i in tqdm.tqdm(range(max_iters)):
     if i % eval_interval == 0:
         losses = estimate_loss()
         print(
-            f"step {i}: train loss {losses['train']:.4f}, val loss {losses['val']:.4f}")
+            f"step {i}: train loss {losses['train']:.4f}, \
+                val loss {losses['val']:.4f}")
 
     xb, yb = data_loader.get_batch('train')
 
@@ -64,7 +65,7 @@ for i in tqdm.tqdm(range(max_iters)):
     loss.backward()
     optimizer.step()
 
-torch.save(model.state_dict(), 'saved_models/model_context64.pt')
+torch.save(model.state_dict(), 'weights/model_context64.pt')
 
 context = torch.zeros((1, 1), dtype=torch.long, device=device)
 print(encoder.decode(model.generate(context, 500)[0].tolist()))

@@ -20,7 +20,7 @@ vocab_size = encoder.vocab_size
 
 model = BigramLanguageModel(vocab_size, n_embd, block_size).to(device)
 state_dict = torch.load(
-    './saved_models/model_context64.pt', map_location=device)
+    './weights/model_context64.pt', map_location=device)
 
 model.load_state_dict(state_dict)
 context = torch.zeros((1, 1), dtype=torch.long, device=device)
