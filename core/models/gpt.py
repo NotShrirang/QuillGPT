@@ -126,8 +126,10 @@ class GPTLanguageModel(nn.Module):
 
         return logits, loss
 
-    def generate(self, idx, max_new_tokens):
+    def generate(self, idx, max_new_tokens, max_seq_length=100):
         for _ in range(max_new_tokens):
+            if idx.size(1) > max_seq_length:
+                idx = idx[:, -max_seq_length:]
             idx_cond = idx[:, -block_size:]
             logits, loss = self(idx_cond)
             logits = logits[:, -1, :]
