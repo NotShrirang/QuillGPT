@@ -1,4 +1,4 @@
-# GPT Model from Scratch
+# GPT from Scratch
 
 This repository contains a custom implementation of the GPT (Generative Pre-trained Transformer) model from scratch. The GPT model is a powerful architecture for natural language processing tasks, including text generation, language translation, and more.
 
