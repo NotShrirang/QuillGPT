@@ -1,17 +1,21 @@
 import torch
+import json
 
 # ------------ Hyperparameters ------------
-batch_size = 32
-block_size = 256
-max_iters = 2100
-eval_interval = 300
-learning_rate = 3e-5
-device = 'cuda' if torch.cuda.is_available() else 'cpu'
-eval_iters = 50
-n_embd = 1024
-n_head = 12
-n_layer = 18
-dropout = 0.3
+with open('config.json') as f:
+    config = json.load(f)
+
+batch_size = config['batch_size']
+block_size = config['block_size']
+max_iters = config['max_iters']
+eval_interval = config['eval_interval']
+learning_rate = config['learning_rate']
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+eval_iters = config['eval_iters']
+n_embd = config['n_embd']
+n_head = config['n_head']
+n_layer = config['n_layer']
+dropout = config['dropout']
 # ----------------------------------------
 
 

@@ -44,8 +44,6 @@ optimizer = torch.optim.AdamW(m.parameters(), lr=learning_rate)
 
 print("\nStarting training...")
 for iter in tqdm.tqdm(range(max_iters)):
-
-    # every once in a while evaluate the loss on train and val sets
     if not iter == 0:
         if iter % eval_interval == 0 or iter == max_iters - 1:
             losses = gptutils.estimate_loss(model)
@@ -53,17 +51,22 @@ for iter in tqdm.tqdm(range(max_iters)):
                 f"step {iter}: train loss {losses['train']:.4f}, val loss \
                     {losses['val']:.4f}")
 
-    # sample a batch of data
     xb, yb = gptutils.get_batch('train')
 
-    # evaluate the loss
+
     logits, loss = model(xb, yb)
     optimizer.zero_grad(set_to_none=True)
     loss.backward()
     optimizer.step()
 
-# generate from the model
+print("\nTraining complete.")
+
+print("Generating text...")
 context = torch.zeros((1, 1), dtype=torch.long, device=device)
 print(gptutils.decode(m.generate(context, max_new_tokens=500)[0].tolist()))
 
-torch.save(model.state_dict(), './weights/GPT_model_word.pt')
+# save the model
+os.makedirs('./trained_models', exist_ok=True)
+torch.save(model.state_dict(), './trained_models/GPT_model_letter.pt')
+
+print("Saved model to `/trained_models/GPT_model_letter.pt`")
