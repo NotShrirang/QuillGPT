@@ -1,17 +1,17 @@
 import torch
 
 # ------------ Hyperparameters ------------
-batch_size = 16
+batch_size = 32
 block_size = 256
-max_iters = 5000
-eval_interval = 500
-learning_rate = 3e-4
+max_iters = 2100
+eval_interval = 300
+learning_rate = 3e-5
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
-eval_iters = 200
-n_embd = 384
+eval_iters = 50
+n_embd = 1024
 n_head = 12
 n_layer = 18
-dropout = 0.2
+dropout = 0.3
 # ----------------------------------------
 
 
@@ -23,16 +23,20 @@ def hyperparameters():
 with open('input.txt', 'r', encoding='utf-8') as f:
     text = f.read()
 
-words = text.split()
-vocab_size = len(words)
-stoi = {word: i for i, word in enumerate(words)}
-itos = {i: word for i, word in enumerate(words)}
+# words = text.split()
+# vocab_size = len(words)
+# stoi = {word: i for i, word in enumerate(words)}
+# itos = {i: word for i, word in enumerate(words)}
+# def encode(s): return [stoi[w] for w in s.split()]
+# def decode(ids): return ' '.join([itos[i] for i in ids]
 
 
-def encode(s): return [stoi[w] for w in s.split()]
-
-
-def decode(ids): return ' '.join([itos[i] for i in ids])
+chars = sorted(list(set(text)))
+vocab_size = len(chars)
+stoi = {ch: i for i, ch in enumerate(chars)}
+itos = {i: ch for i, ch in enumerate(chars)}
+def encode(s): return [stoi[c] for c in s]
+def decode(l): return ''.join([itos[i] for i in l])
 
 
 # Train and test splits
