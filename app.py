@@ -1,47 +1,93 @@
 import torch
 import streamlit as st
+from colorama import Fore
 from core.models.gpt import GPTLanguageModel
-from utils.gptutils import encode, decode
-
-torch.manual_seed(0)
+from utils.gptutils import hyperparameters, load_data
 
 st.set_page_config(layout='wide',
-                   page_title='Shakespearean GPT',
+                   page_title='GPT from Scratch',
                    page_icon='📜',
                    initial_sidebar_state='expanded'
                    )
 
-st.title('📜 Shakespearean GPT')
-
-st.subheader('Generate text in the style of Shakespeare')
 
 
-def decode_text(input, model):
-    for idx in model.generate(input, 500):
-        text = decode(idx[0].tolist()).split()[-1] + ' '
+
+def decode_text(input, model: GPTLanguageModel, max_tokens, temperature, decode):
+    for idx in model.generate(idx=input, max_new_tokens=max_tokens, max_seq_length=50, temperature=temperature):
+        text = decode(idx[0].tolist())[-1]
         yield text
 
+models = {
+    "Shakespearean GPT": './weights/GPT_model_char.pt',
+    "GPT": './weights/Harpoon_Corpus_GPT_model_word2.pt',
+}
+
+st.sidebar.header('GPT Model')
+
+st.sidebar.write("This app generates text using a GPT model trained on either the Harpoon corpus or Shakespearean plays.")
+
+# Select one of the two model
+model_name = st.sidebar.selectbox('Select a model:', list(models.keys()))
+if model_name == "GPT":
+    st.title('GPT From Scratch')
+    st.write("This model was trained on the Harpoon corpus.")
+else:
+    st.title('Shakespearean GPT')
+    st.write("This model was trained on Shakespearean plays.")
+
+path = models[model_name]
+
+if model_name == "GPT":
+    config_path = './config/config.json'
+    data_path = './data/corpus.txt'
+    name = "Harpoon GPT"
+    train_data, val_data, vocab_size, encode, decode = load_data(data_path)
+    (batch_size, block_size, max_iters, eval_interval, learning_rate, device,
+    eval_iters, n_embd, n_head, n_layer, dropout, vocab_size) = hyperparameters(config_path=config_path, data_path=data_path)
+
+elif model_name == "Shakespearean GPT":
+    config_path = './config/shakespearean_config.json'
+    data_path = './data/input.txt'
+    name = "Shakespearean GPT"
+    train_data, val_data, vocab_size, encode, decode = load_data(data_path)
+    (batch_size, block_size, max_iters, eval_interval, learning_rate, device,
+    eval_iters, n_embd, n_head, n_layer, dropout, vocab_size) = hyperparameters(config_path=config_path, data_path=data_path)
+    
+
+if model_name == "GPT":
+    input_text = st.text_area(
+        'Enter a prompt:', 'And then Ted said, "'
+    )
+else:
+    input_text = st.text_area(
+        'Enter a prompt:', 'Write a scene about ROMEO arguing with JULIET. \nROMEO:'
+    )
+
+temperature = st.sidebar.slider('Temperature:', 0.1, 1.0, 0.5, 0.1)
+max_tokens = st.sidebar.slider('Max Tokens:', 250, 1000, 500, 50)
 
 @st.cache_resource
-def load_model():
+def load_model(path):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-    model = GPTLanguageModel().to(device)
+    model = GPTLanguageModel(
+        vocab_size, n_embd, block_size, n_head, n_layer, dropout, device, name=name
+    ).to(device)
     state_dict = torch.load(
-        './weights/GPT_model_word.pt', map_location=device)
+        path, map_location=device)
 
     model.load_state_dict(state_dict)
     return model, device
 
+model, device = load_model(path)
 
-model, device = load_model()
 
-input_text = st.text_area(
-    'Enter a prompt:', 'Write a scene about Romeo arguing with Juliet.\nROMEO:'
-)
-
-if st.button('Generate Text'):
-    prompt = input_text
-    input = torch.tensor([encode(prompt)], dtype=torch.long, device=device)
-    generated_text = []
-    st.write_stream(decode_text(input, model))
+if model:
+    if st.button('Generate Text'):
+        prompt = input_text
+        st.subheader(model.name)
+        input = torch.tensor([encode(prompt)], dtype=torch.long, device=device)
+        generated_text = []
+        st.write(f":green[{prompt}]")
+        st.write_stream(decode_text(input, model, max_tokens, temperature, decode))
