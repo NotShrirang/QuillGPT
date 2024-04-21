@@ -21,13 +21,13 @@ To run the training and inference scripts, follow these steps:
 1. Clone the repository:
 
 ```sh
-git clone https://github.com/NotShrirang/GPT-Model-from-Scratch.git
+git clone https://github.com/NotShrirang/GPT-From-Scratch.git
 ```
 
 2. Install the required packages:
 
 ```sh
-cd GPT-Model-from-Scratch
+cd GPT-From-Scratch
 pip install -r requirements.txt
 ```
 
@@ -51,26 +51,6 @@ To train the GPT model, follow these steps:
 
 After training, you can use the trained GPT model for text generation. Here's an example of using the trained model for inference:
 
-```python
-import torch
-from core.models.gpt import GPTLanguageModel
-from utils.gptutils import encode, decode
-
-torch.manual_seed(0)
-
-device = 'cuda' if torch.cuda.is_available() else 'cpu'
-
-model = GPTLanguageModel().to(device)
-state_dict = torch.load(
-    './weights/GPT_model_word.pt', map_location=device)
-
-model.load_state_dict(state_dict)
-
-prompt = "Ted said, '"
-input = torch.tensor([encode(prompt)], dtype=torch.long, device=device)
-
-generated_text = []
-for idx in model.generate(input, 500):
-    print(decode(idx[0].tolist()).split()[-1], end=' ')
-    generated_text.append(decode(idx[0].tolist()))
+```bash
+python scripts/inference_gpt.py
 ```
