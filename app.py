@@ -2,6 +2,7 @@ import torch
 import streamlit as st
 from colorama import Fore
 from core.models.gpt import GPTLanguageModel
+from core.tokenizer.tokenizer import Tokenizer
 from utils.gptutils import hyperparameters, load_data
 
 st.set_page_config(layout='wide',
@@ -10,12 +11,9 @@ st.set_page_config(layout='wide',
                    initial_sidebar_state='expanded'
                    )
 
-
-
-
-def decode_text(input, model: GPTLanguageModel, max_tokens, temperature, decode):
+def decode_text(input, model: GPTLanguageModel, max_tokens, temperature):
     for idx in model.generate(idx=input, max_new_tokens=max_tokens, max_seq_length=50, temperature=temperature):
-        text = decode(idx[0].tolist())[-1]
+        text = tokenizer.decode(idx[0].tolist())[-1]
         yield text
 
 models = {
@@ -42,17 +40,21 @@ if model_name == "GPT":
     config_path = './config/config.json'
     data_path = './data/corpus.txt'
     name = "Harpoon GPT"
-    train_data, val_data, vocab_size, encode, decode = load_data(data_path)
+    tokenizer: Tokenizer = Tokenizer()
+    tokenizer.from_pretrained(config_path)
+    # train_data, val_data, vocab_size, encode, decode = load_data(data_path)
     (batch_size, block_size, max_iters, eval_interval, learning_rate, device,
-    eval_iters, n_embd, n_head, n_layer, dropout, vocab_size) = hyperparameters(config_path=config_path, data_path=data_path)
+    eval_iters, n_embd, n_head, n_layer, dropout, vocab_size) = hyperparameters(config_path=config_path)
 
 elif model_name == "Shakespearean GPT":
     config_path = './config/shakespearean_config.json'
     data_path = './data/input.txt'
     name = "Shakespearean GPT"
-    train_data, val_data, vocab_size, encode, decode = load_data(data_path)
+    tokenizer: Tokenizer = Tokenizer()
+    tokenizer.from_pretrained(config_path)
+    # train_data, val_data, vocab_size, encode, decode = load_data(data_path)
     (batch_size, block_size, max_iters, eval_interval, learning_rate, device,
-    eval_iters, n_embd, n_head, n_layer, dropout, vocab_size) = hyperparameters(config_path=config_path, data_path=data_path)
+    eval_iters, n_embd, n_head, n_layer, dropout, vocab_size) = hyperparameters(config_path=config_path)
     
 
 if model_name == "GPT":
@@ -87,7 +89,7 @@ if model:
     if st.button('Generate Text'):
         prompt = input_text
         st.subheader(model.name)
-        input = torch.tensor([encode(prompt)], dtype=torch.long, device=device)
+        input = torch.tensor([tokenizer.encode(prompt)], dtype=torch.long, device=device)
         generated_text = []
         st.write(f":green[{prompt}]")
-        st.write_stream(decode_text(input, model, max_tokens, temperature, decode))
+        st.write_stream(decode_text(input, model, max_tokens, temperature))
