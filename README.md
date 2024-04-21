@@ -14,6 +14,8 @@ This repository contains a custom implementation of the GPT (Generative Pre-trai
 
 The GPT model implemented in this repository is designed for text generation tasks. It uses the Transformer architecture with self-attention mechanisms to generate coherent and contextually relevant text. The GPT architecture provided in this repository is an implementation of decoder block from [Attention is All You Need](https://arxiv.org/abs/1706.03762) paper by Vaswani et. al.
 
+![Streamlit Demo](https://github.com/NotShrirang/GPT-From-Scratch/assets/85283622/fa888670-2c44-4f97-a07d-c58473d847d0)
+
 ## Installation:
 
 To run the training and inference scripts, follow these steps:
@@ -47,7 +49,7 @@ To train the GPT model, follow these steps:
 2. Define an optimizer and train the model using the provided training script [train_gpt.py](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/scripts/train_gpt.py).
 3. Save the trained model weights.
 
-### Using the Trained Model for Inference:
+### For Inference:
 
 After training, you can use the trained GPT model for text generation. Here's an example of using the trained model for inference:
 
