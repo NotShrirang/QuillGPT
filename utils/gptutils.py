@@ -2,7 +2,7 @@ import torch
 import json
 
 # ------------ Hyperparameters ------------
-def hyperparameters(config_path: str, data_path: str):
+def hyperparameters(config_path: str):
     with open(config_path) as f:
         config = json.load(f)
 
@@ -17,7 +17,7 @@ def hyperparameters(config_path: str, data_path: str):
     n_head = config['n_head']
     n_layer = config['n_layer']
     dropout = config['dropout']
-    _, _, vocab_size, _, _ = load_data(data_path)
+    vocab_size = config['vocab_size']
     return (batch_size, block_size, max_iters, eval_interval, learning_rate,
             device, eval_iters, n_embd, n_head, n_layer, dropout, vocab_size)
 # ----------------------------------------
@@ -43,6 +43,7 @@ def load_data(path) -> tuple[torch.Tensor, torch.Tensor, int, callable, callable
     n = int(0.9*len(data))
     train_data = data[:n]
     val_data = data[n:]
+    
 
     return train_data, val_data, vocab_size, encode, decode
 
@@ -57,13 +58,13 @@ def get_batch(split, train_data, val_data, device, block_size, batch_size):
 
 
 @torch.no_grad()
-def estimate_loss(model, get_batch, eval_iters):
+def estimate_loss(model, get_batch, eval_iters, train_data, val_data, device, block_size, batch_size):
     out = {}
     model.eval()
     for split in ['train', 'val']:
         losses = torch.zeros(eval_iters)
         for k in range(eval_iters):
-            X, Y = get_batch(split)
+            X, Y = get_batch(split, train_data, val_data, device, block_size, batch_size)
             logits, loss = model(X, Y)
             losses[k] = loss.item()
         out[split] = losses.mean()

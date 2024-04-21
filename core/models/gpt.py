@@ -85,6 +85,7 @@ class GPTLanguageModel(nn.Module):
         self.ln_f = nn.LayerNorm(n_embd)
         self.lm_head = nn.Linear(n_embd, vocab_size)
         self.apply(self._init_weights)
+        self.history = {}
 
     def _init_weights(self, module):
         if isinstance(module, nn.Linear):
