@@ -45,14 +45,45 @@ streamlit run app.py
 
 To train the GPT model, follow these steps:
 
-1. Set up hyperparameters in [config.json](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/config.json) file and initialize the model.
-2. Define an optimizer and train the model using the provided training script [train_gpt.py](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/scripts/train_gpt.py).
-3. Save the trained model weights.
+1. Prepare data. Put the whole text data into single .txt file and save it.
+2. Write the configurations for transformer and save the file. 
+For example: 
+```json
+{
+  "data_path": "data/corpus.txt",
+  "vocab_size": 135,
+  "batch_size": 32,
+  "block_size": 256,
+  "max_iters": 3000,
+  "eval_interval": 300,
+  "learning_rate": 3e-5,
+  "eval_iters": 50,
+  "n_embd": 1024,
+  "n_head": 12,
+  "n_layer": 18,
+  "dropout": 0.3,
+}
+```
+
+3. Train model using script `scripts/train_gpt.py`
+```bash
+python scripts/train_gpt.py \
+        --config_path config/config.json \
+        --data_path data/corpus.txt \
+        --output_dir trained_models
+```
+(You can change the `config_path`, `data_path` and `output_dir` as per your requirements.)
+
+4. The trained model will be saved in the `output_dir` specified in the command.
 
 ### For Inference:
 
 After training, you can use the trained GPT model for text generation. Here's an example of using the trained model for inference:
 
 ```bash
-python scripts/inference_gpt.py
+python scripts/inference_gpt.py \
+        --config_path config/shakespearean_config.json \
+        --weights_path weights/GPT_model_char.pt \
+        --max_length 500 \
+        --prompt "Once upon a time"
 ```

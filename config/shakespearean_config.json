@@ -1,5 +1,4 @@
 {
-  "data_path": "data/input.txt",
   "vocab_size": 65,
   "batch_size": 32,
   "block_size": 256,

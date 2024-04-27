@@ -18,6 +18,12 @@ class Tokenizer:
         with open(config_path) as f:
             config = json.load(f)
         self.config = config
+        if 'encode' not in config:
+            raise ValueError("Config file must contain an 'encode' key.")
+        if 'decode' not in config:
+            raise ValueError("Config file must contain a 'decode' key.")
+        if 'vocab_size' not in config:
+            raise ValueError("Config file must contain a 'vocab_size' key.")
         stoi = config['encode']
         self.stoi = {k: int(v) for k, v in stoi.items()}
         itos = config['decode']
@@ -26,6 +32,10 @@ class Tokenizer:
         return self
     
     def load_data(self, path: str) -> str:
+        if not os.path.exists(path):
+            raise FileNotFoundError("File not found.")
+        if not path.endswith('.txt'):
+            raise ValueError("File must be a text file.")
         with open(path, 'r', encoding='utf-8') as f:
             text = f.read()
         chars = sorted(list(set(text)))

@@ -17,9 +17,8 @@ def hyperparameters(config_path: str):
     n_head = config['n_head']
     n_layer = config['n_layer']
     dropout = config['dropout']
-    vocab_size = config['vocab_size']
     return (batch_size, block_size, max_iters, eval_interval, learning_rate,
-            device, eval_iters, n_embd, n_head, n_layer, dropout, vocab_size)
+            device, eval_iters, n_embd, n_head, n_layer, dropout)
 # ----------------------------------------
 
 def load_data(path) -> tuple[torch.Tensor, torch.Tensor, int, callable, callable]:

@@ -1,5 +1,4 @@
 {
-  "data_path": "data/corpus.txt",
   "vocab_size": 135,
   "batch_size": 32,
   "block_size": 256,
