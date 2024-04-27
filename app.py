@@ -42,9 +42,9 @@ if model_name == "GPT":
     name = "Harpoon GPT"
     tokenizer: Tokenizer = Tokenizer()
     tokenizer.from_pretrained(config_path)
-    # train_data, val_data, vocab_size, encode, decode = load_data(data_path)
+    vocab_size = tokenizer.vocab_size
     (batch_size, block_size, max_iters, eval_interval, learning_rate, device,
-    eval_iters, n_embd, n_head, n_layer, dropout, vocab_size) = hyperparameters(config_path=config_path)
+    eval_iters, n_embd, n_head, n_layer, dropout) = hyperparameters(config_path=config_path)
 
 elif model_name == "Shakespearean GPT":
     config_path = './config/shakespearean_config.json'
@@ -52,9 +52,9 @@ elif model_name == "Shakespearean GPT":
     name = "Shakespearean GPT"
     tokenizer: Tokenizer = Tokenizer()
     tokenizer.from_pretrained(config_path)
-    # train_data, val_data, vocab_size, encode, decode = load_data(data_path)
+    vocab_size = tokenizer.vocab_size
     (batch_size, block_size, max_iters, eval_interval, learning_rate, device,
-    eval_iters, n_embd, n_head, n_layer, dropout, vocab_size) = hyperparameters(config_path=config_path)
+    eval_iters, n_embd, n_head, n_layer, dropout) = hyperparameters(config_path=config_path)
     
 
 if model_name == "GPT":
