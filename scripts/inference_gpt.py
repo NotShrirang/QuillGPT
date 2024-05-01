@@ -4,16 +4,14 @@ import os
 import argparse
 import colorama
 
-# Get the parent directory of the current file
 current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.dirname(current_dir)
 
-# Add the parent directory to the system path
 sys.path.append(parent_dir)
 
 from core.models.gpt import GPTLanguageModel
-from utils.gptutils import hyperparameters, load_data
-from core.tokenizer.tokenizer import Tokenizer
+from core.utils.gptutils import hyperparameters, load_data
+from core.tokenizers.tokenizer import Tokenizer
 
 args = argparse.ArgumentParser()
 

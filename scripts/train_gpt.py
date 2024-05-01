@@ -12,9 +12,9 @@ parent_dir = os.path.dirname(current_dir)
 # Add the parent directory to the system path
 sys.path.append(parent_dir)
 
-import utils.gptutils as gptutils
+import core.utils.gptutils as gptutils
 from core.models.gpt import GPTLanguageModel
-from core.tokenizer.tokenizer import Tokenizer
+from core.tokenizers.tokenizer import Tokenizer
 
 args = argparse.ArgumentParser()
 

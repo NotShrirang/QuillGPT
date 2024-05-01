@@ -2,8 +2,8 @@ import torch
 import streamlit as st
 from colorama import Fore
 from core.models.gpt import GPTLanguageModel
-from core.tokenizer.tokenizer import Tokenizer
-from utils.gptutils import hyperparameters, load_data
+from core.tokenizers.tokenizer import Tokenizer
+from core.utils.gptutils import hyperparameters, load_data
 
 st.set_page_config(layout='wide',
                    page_title='GPT from Scratch',

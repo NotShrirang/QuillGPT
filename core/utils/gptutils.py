@@ -69,5 +69,3 @@ def estimate_loss(model, get_batch, eval_iters, train_data, val_data, device, bl
         out[split] = losses.mean()
     model.train()
     return out
-
-train_data, val_data, vocab_size, encode, decode = load_data('data/input.txt')
