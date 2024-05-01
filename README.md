@@ -8,13 +8,32 @@ This repository contains a custom implementation of the GPT (Generative Pre-trai
 - [Installation](#installation)
 - [Usage](#usage)
   - [Training the GPT Model](#training-the-gpt-model)
-  - [Using the Trained Model for Inference](#using-the-trained-model-for-inference)
+  - [Using the Trained Model for Inference](#for-inference)
 
 ## Overview
 
-The GPT model implemented in this repository is designed for text generation tasks. It uses the Transformer architecture with self-attention mechanisms to generate coherent and contextually relevant text. The GPT architecture provided in this repository is an implementation of decoder block from [Attention is All You Need](https://arxiv.org/abs/1706.03762) paper by Vaswani et. al.
+The GPT model implemented in this repository is designed for text generation tasks. It uses the Transformer architecture with self-attention mechanisms to generate text. The GPT architecture provided in this repository is an implementation of decoder block from [Attention is All You Need](https://arxiv.org/abs/1706.03762) paper by Vaswani et. al.
 
 ![Streamlit Demo](https://github.com/NotShrirang/GPT-From-Scratch/assets/85283622/fa888670-2c44-4f97-a07d-c58473d847d0)
+
+## Models:
+
+There are two pre-trained models and weights included in this repository.
+
+1. Shakespearean GPT
+   - Parameters - 10.7 M
+   - [Model Config](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/config/shakespearean_config.json)
+   - Training Data contains text form Shakespearean plays. Data - [input.txt](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/data/input.txt)
+   - [Training Notebook](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/notebooks/GPT_From_Scratch_CharEmbeddings.ipynb)
+   - Model trained on NVIDIA T4.
+     <br> ![Training and Validation oss over training steps](https://github.com/NotShrirang/GPT-From-Scratch/assets/85283622/133c5064-db26-4b3b-b5f6-95c040a7ff66)
+
+2. Harpoon GPT
+   - Parameters - 226 M
+   - [Model Config](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/config/config.json)
+   - Training Data contains text form Shakespearean plays. Data - [corpus.txt](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/data/corpus.txt)
+   - [Training Notebook](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/notebooks/GPT_From_Scratch_with_1024_char_embd.ipynb)
+   - Model trained on NVIDIA A100.
 
 ## Installation:
 
@@ -33,10 +52,15 @@ cd GPT-From-Scratch
 pip install -r requirements.txt
 ```
 
-3. For running streamlit interface (Optional):
+### For running Streamlit interface:
 
 ```sh
 streamlit run app.py
+```
+
+### For running FastAPI Microservice:
+```sh
+python main.py
 ```
 
 ## Usage
@@ -47,23 +71,23 @@ To train the GPT model, follow these steps:
 
 1. Prepare data. Put the whole text data into single .txt file and save it.
 2. Write the configurations for transformer and save the file. 
-For example: 
-```json
-{
-  "data_path": "data/corpus.txt",
-  "vocab_size": 135,
-  "batch_size": 32,
-  "block_size": 256,
-  "max_iters": 3000,
-  "eval_interval": 300,
-  "learning_rate": 3e-5,
-  "eval_iters": 50,
-  "n_embd": 1024,
-  "n_head": 12,
-  "n_layer": 18,
-  "dropout": 0.3,
-}
-```
+<br>For example: 
+    ```json
+    {
+      "data_path": "data/corpus.txt",
+      "vocab_size": 135,
+      "batch_size": 32,
+      "block_size": 256,
+      "max_iters": 3000,
+      "eval_interval": 300,
+      "learning_rate": 3e-5,
+      "eval_iters": 50,
+      "n_embd": 1024,
+      "n_head": 12,
+      "n_layer": 18,
+      "dropout": 0.3,
+    }
+    ```
 
 3. Train model using script `scripts/train_gpt.py`
 ```bash
