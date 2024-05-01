@@ -3,40 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from starlette import status
 from fastapi.responses import JSONResponse, StreamingResponse
 from functools import cache
-import torch
-import sys
-import os
 
-from core.models import gpt
-from core.tokenizers.tokenizer import Tokenizer
-from core.utils.gptutils import hyperparameters, load_data
-
-def load_model(config_path: str = 'config/shakespearean_config.json', weights_path: str = 'weights/GPT_model_char.pt') -> tuple[gpt.GPTLanguageModel, Tokenizer]:
-    """
-    Load the model
-    """
-    tokenizer = Tokenizer()
-    tokenizer.from_pretrained(config_path)
-    vocab_size = tokenizer.vocab_size
-
-    (batch_size, block_size, max_iters, eval_interval, learning_rate, device,
-        eval_iters, n_embd, n_head, n_layer, dropout) = hyperparameters(config_path=config_path)
-    
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
-
-    model = gpt.GPTLanguageModel(
-        vocab_size=vocab_size,
-        n_embd=n_embd,
-        n_head=n_head,
-        n_layer=n_layer,
-        block_size=block_size,
-        dropout=dropout,
-        device=device
-    )
-
-    model.load_state_dict(torch.load(weights_path, map_location=device))
-    return model, tokenizer
-
+from server import load_model, inference
 
 app = FastAPI()
 
@@ -47,8 +15,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
 
 @app.get("/", status_code=status.HTTP_200_OK, tags=["Root"])
 def root():
@@ -61,13 +27,10 @@ def root():
     return {"message": "GPT FastAPI Service is running."}
 
 
-@app.on_event("startup")
 @cache
-def on_startup():
-    """
-    Load the model on startup
-    """
-    load_model()
+def load_inference_model() -> tuple:
+    model, tokenizer = load_model()
+    return model, tokenizer
 
 
 @app.post("/generate", status_code=status.HTTP_200_OK, tags=["Generate"])
@@ -83,13 +46,11 @@ def generate(prompt: str, max_length: int = 500, temperature: float = 0.7):
     Returns:
     dict: The generated text
     """
-    model, tokenizer = load_model()
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    model, tokenizer = load_inference_model()
+    inference_generator = inference(model, tokenizer, prompt, max_length, temperature)
     generated_text = ""
-    input = torch.tensor([tokenizer.encode(prompt)], dtype=torch.long, device=device)
-    for idx in model.generate(input, max_length, temperature=temperature):
-        generated_text += tokenizer.decode(idx[0].tolist())[-1]
-    
+    for generated_letter in inference_generator:
+        generated_text += generated_letter
     return JSONResponse(content={"prompt": prompt, "response": generated_text}, status_code=status.HTTP_200_OK)
     
 
@@ -107,14 +68,9 @@ def streaming_response(prompt: str, max_length: int = 500, temperature: float = 
     StreamingResponse: The generated text
     """
     model, tokenizer = load_model()
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    input = torch.tensor([tokenizer.encode(prompt)], dtype=torch.long, device=device)
-    
-    def generate_text():
-        for idx in model.generate(input, max_length, temperature=temperature):
-            text = tokenizer.decode(idx[0].tolist())[-1]
-            yield text
-    return StreamingResponse(generate_text(), media_type="text/plain", status_code=status.HTTP_200_OK)
+    inference_generator = inference(model, tokenizer, prompt, max_length, temperature)
+    print("Inference complete.")
+    return StreamingResponse(inference_generator, media_type="text/plain", status_code=status.HTTP_200_OK)
 
 
 if __name__ == "__main__":
