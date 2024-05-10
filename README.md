@@ -22,6 +22,7 @@ There are two pre-trained models and weights included in this repository.
 
 1. Shakespearean GPT
    - Parameters - 10.7 M
+   - [Weights](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/weights/GPT_model_char.pt)
    - [Model Config](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/config/shakespearean_config.json)
    - Training Data contains text from Shakespearean plays. Data - [input.txt](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/data/input.txt)
    - [Training Notebook](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/notebooks/GPT_From_Scratch_CharEmbeddings.ipynb)
@@ -30,6 +31,7 @@ There are two pre-trained models and weights included in this repository.
 
 2. Harpoon GPT
    - Parameters - 226 M
+   - [Weights](https://www.dropbox.com/scl/fi/vi5z3s17otn0jf7sr40po/Harpoon_Corpus_GPT_model.pt?rlkey=r7oppeslusv736fzmi908le95&st=wak0uf2t&dl=0)
    - [Model Config](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/config/config.json)
    - Trained on random text from books. Data - [corpus.txt](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/data/corpus.txt)
    - [Training Notebook](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/notebooks/GPT_From_Scratch_with_1024_char_embd.ipynb)
