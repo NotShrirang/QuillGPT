@@ -1,1 +1,1 @@
-from . import gpt, bigram
+from . import gpt
