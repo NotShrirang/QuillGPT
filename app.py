@@ -73,14 +73,19 @@ max_tokens = st.sidebar.slider('Max Tokens:', 250, 1000, 500, 50)
 def load_model(path):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-    model = GPTLanguageModel(
-        vocab_size, n_embd, block_size, n_head, n_layer, dropout, device, name=name
-    ).to(device)
-    state_dict = torch.load(
-        path, map_location=device)
+    try:
+        model = GPTLanguageModel(
+            vocab_size, n_embd, block_size, n_head, n_layer, dropout, device, name=name
+        ).to(device)
+        state_dict = torch.load(
+            path, map_location=device)
 
-    model.load_state_dict(state_dict)
-    return model, device
+        model.load_state_dict(state_dict)
+        return model, device
+    except FileNotFoundError as e:
+        st.error(f"Don't forget to download the model weights from the link in the README.md file.")
+        return None, None
+
 
 model, device = load_model(path)
 
