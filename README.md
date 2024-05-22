@@ -56,6 +56,8 @@ cd GPT-From-Scratch
 pip install -r requirements.txt
 ```
 
+Make sure you download the weights from [here](https://www.dropbox.com/scl/fi/vi5z3s17otn0jf7sr40po/Harpoon_Corpus_GPT_model.pt?rlkey=r7oppeslusv736fzmi908le95&st=wak0uf2t&dl=0) before proceeding!
+
 ### For running Streamlit interface:
 
 ```sh
@@ -125,3 +127,6 @@ python scripts/inference_gpt.py \
         --max_length 500 \
         --prompt "Once upon a time"
 ```
+
+## Support
+Support me by simply starring this repository! ⭐
