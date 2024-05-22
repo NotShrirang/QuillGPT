@@ -5,10 +5,17 @@ This repository contains a custom implementation of the GPT (Generative Pre-trai
 ## Table of Contents
 
 - [Overview](#overview)
-- [Installation](#installation)
+- [Models](#models)
+  - [Shakespearean GPT](#shakespearean-gpt)
+  - [Harpoon GPT](#harpoon-gpt)
+- [Getting Started](#getting-started)
+  - [Installation](#installation)
 - [Usage](#usage)
   - [Training the GPT Model](#training-the-gpt-model)
   - [Using the Trained Model for Inference](#for-inference)
+- [License](#license)
+- [Contributing](#contributing)
+- [Support](#support)
 
 ## Overview
 
@@ -20,7 +27,7 @@ The GPT model implemented in this repository is designed for text generation tas
 
 There are two pre-trained models and weights included in this repository.
 
-### 1. Shakespearean GPT
+### Shakespearean GPT
    - Parameters - 10.7 M
    - [Weights](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/weights/GPT_model_char.pt)
    - [Model Config](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/config/shakespearean_config.json)
@@ -30,7 +37,7 @@ There are two pre-trained models and weights included in this repository.
    - Model trained on NVIDIA T4.
      <br> ![Training and Validation oss over training steps](https://github.com/NotShrirang/GPT-From-Scratch/assets/85283622/133c5064-db26-4b3b-b5f6-95c040a7ff66)
 
-### 2. Harpoon GPT
+### Harpoon GPT
    - Parameters - 226 M
    - [Weights](https://www.dropbox.com/scl/fi/vi5z3s17otn0jf7sr40po/Harpoon_Corpus_GPT_model.pt?rlkey=r7oppeslusv736fzmi908le95&st=wak0uf2t&dl=0)
    - [Model Config](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/config/config.json)
@@ -39,7 +46,9 @@ There are two pre-trained models and weights included in this repository.
    - [Training Notebook](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/notebooks/GPT_From_Scratch_with_1024_char_embd.ipynb)
    - Model trained on NVIDIA A100.
 
-## Installation:
+## Getting Started:
+
+### Installation:
 
 To run the training and inference scripts, follow these steps:
 
@@ -56,7 +65,7 @@ cd GPT-From-Scratch
 pip install -r requirements.txt
 ```
 
-Make sure you download the weights from [here](https://www.dropbox.com/scl/fi/vi5z3s17otn0jf7sr40po/Harpoon_Corpus_GPT_model.pt?rlkey=r7oppeslusv736fzmi908le95&st=wak0uf2t&dl=0) before proceeding!
+Make sure you download the weights for Harpoon GPT from [here](https://www.dropbox.com/scl/fi/vi5z3s17otn0jf7sr40po/Harpoon_Corpus_GPT_model.pt?rlkey=r7oppeslusv736fzmi908le95&st=wak0uf2t&dl=0) before proceeding!
 
 ### For running Streamlit interface:
 
@@ -127,6 +136,13 @@ python scripts/inference_gpt.py \
         --max_length 500 \
         --prompt "Once upon a time"
 ```
+
+## License
+MIT © [Shrirang Mahajan](https://github.com/NotShrirang)
+
+
+## Contributing
+Feel free to submit pull requests, create issues, or spread the word!
 
 ## Support
 Support me by simply starring this repository! ⭐
