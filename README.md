@@ -20,7 +20,7 @@ The GPT model implemented in this repository is designed for text generation tas
 
 There are two pre-trained models and weights included in this repository.
 
-1. Shakespearean GPT
+### 1. Shakespearean GPT
    - Parameters - 10.7 M
    - [Weights](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/weights/GPT_model_char.pt)
    - [Model Config](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/config/shakespearean_config.json)
@@ -30,7 +30,7 @@ There are two pre-trained models and weights included in this repository.
    - Model trained on NVIDIA T4.
      <br> ![Training and Validation oss over training steps](https://github.com/NotShrirang/GPT-From-Scratch/assets/85283622/133c5064-db26-4b3b-b5f6-95c040a7ff66)
 
-2. Harpoon GPT
+### 2. Harpoon GPT
    - Parameters - 226 M
    - [Weights](https://www.dropbox.com/scl/fi/vi5z3s17otn0jf7sr40po/Harpoon_Corpus_GPT_model.pt?rlkey=r7oppeslusv736fzmi908le95&st=wak0uf2t&dl=0)
    - [Model Config](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/config/config.json)
@@ -47,12 +47,12 @@ To run the training and inference scripts, follow these steps:
 
 ```sh
 git clone https://github.com/NotShrirang/GPT-From-Scratch.git
+cd GPT-From-Scratch
 ```
 
 2. Install the required packages:
 
 ```sh
-cd GPT-From-Scratch
 pip install -r requirements.txt
 ```
 
@@ -65,6 +65,16 @@ streamlit run app.py
 ### For running FastAPI Microservice:
 ```sh
 python main.py
+```
+
+### Build and Run the Docker Container with bash:
+```sh
+./run.sh start-dev
+```
+
+### To stop the Docker Container, run the following command:
+```sh
+./run.sh stop-dev
 ```
 
 ## Usage
