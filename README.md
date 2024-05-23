@@ -1,15 +1,30 @@
-# GPT from Scratch
+# QuillGPT
 
-This repository contains a custom implementation of the GPT (Generative Pre-trained Transformer) model from scratch. The GPT model is a powerful architecture for natural language processing tasks, including text generation, language translation, and more.
+![GitHub stars](https://img.shields.io/github/stars/NotShrirang/GPT-From-Scratch?style=social)
+![GitHub forks](https://img.shields.io/github/forks/NotShrirang/GPT-From-Scratch?style=social)
+![GitHub issues](https://img.shields.io/github/issues/NotShrirang/GPT-From-Scratch)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/NotShrirang/GPT-From-Scratch)
+![GitHub](https://img.shields.io/github/license/NotShrirang/GPT-From-Scratch)
+![GitHub last commit](https://img.shields.io/github/last-commit/NotShrirang/GPT-From-Scratch)
+![GitHub repo size](https://img.shields.io/github/repo-size/NotShrirang/GPT-From-Scratch)
+
+QuillGPT is an implementation of the GPT decoder block based on the architecture from [Attention is All You Need](https://arxiv.org/abs/1706.03762) paper by Vaswani et. al. implemented in PyTorch. Additionally, this repository contains two pre-trained models—Shakespearean GPT and Harpoon GPT—along with their trained weights. For ease of experimentation and deployment, a Streamlit Playground is provided for interactive exploration of these models and FastAPI microservice implemented with Docker containerization for scalable deployment. You'll also find Python scripts for training new GPT models and performing inference on them, along with notebooks showcasing trained models. To facilitate text encoding and decoding, a simple tokenizer is implemented. Explore QuillGPT to utilize these tools and enhance your natural language processing projects!
 
 ## Table of Contents
 
 - [Overview](#overview)
+  - [Decoder Block](#the-decoder-block)
+  - [Input Embeddings](#input-embeddings)
+  - [Positional Embeddings](#positional-embeddings)
+  - [Self-Attention](#self-attention)
 - [Models](#models)
   - [Shakespearean GPT](#shakespearean-gpt)
   - [Harpoon GPT](#harpoon-gpt)
 - [Getting Started](#getting-started)
   - [Installation](#installation)
+  - [Streamlit Playground](#for-running-streamlit-interface)
+  - [FastAPI Microservice](#for-running-fastapi-microservice)
+  - [Running Docker Container](#for-using-containerized-version)
 - [Usage](#usage)
   - [Training the GPT Model](#training-the-gpt-model)
   - [Using the Trained Model for Inference](#for-inference)
@@ -19,9 +34,29 @@ This repository contains a custom implementation of the GPT (Generative Pre-trai
 
 ## Overview
 
-The GPT model implemented in this repository is designed for text generation tasks. It uses the Transformer architecture with self-attention mechanisms to generate text. The GPT architecture provided in this repository is an implementation of decoder block from [Attention is All You Need](https://arxiv.org/abs/1706.03762) paper by Vaswani et. al.
+### The Decoder Block:
 
-![Streamlit Demo](https://github.com/NotShrirang/GPT-From-Scratch/assets/85283622/fa888670-2c44-4f97-a07d-c58473d847d0)
+<img src="https://github.com/NotShrirang/GPT-From-Scratch/assets/85283622/397049a3-10cc-49b5-8696-f19806b2668e" width=350 alt="Decoder Architecture"/>
+
+The decoder block is a crucial component of the GPT (Generative Pre-trained Transformer) model, it is where GPT actually generates the text. It leverages the self-attention mechanism to process input sequences and generate coherent outputs. Each decoder block consists of multiple layers, including self-attention layers, feed-forward neural networks, and layer normalization. The self-attention layers allow the model to weigh the importance of different words in a sequence, capturing context and dependencies regardless of their positions. This enables the GPT model to generate contextually relevant text.
+
+### Input Embeddings:
+
+![vector embeddings](https://github.com/NotShrirang/GPT-From-Scratch/assets/85283622/29b4c375-c9f0-47b9-9d34-2a21dfdf0be8)
+
+Input embeddings play a crucial role in transformer-based models like GPT by transforming input tokens into meaningful numerical representations. These embeddings serve as the initial input for the model, capturing semantic information about the words in the sequence. The process involves mapping each token in the input sequence to a high-dimensional vector space, where similar tokens are positioned closer together. This enables the model to understand the relationships between different words and effectively learn from the input data. The input embeddings are then fed into the subsequent layers of the model for further processing.
+
+### Positional Embeddings:
+
+![positional_encoding](https://github.com/NotShrirang/GPT-From-Scratch/assets/85283622/90293fb0-8f20-4dc0-adba-8c31a54ef4f4)
+
+In addition to input embeddings, positional embeddings are another vital component of transformer architectures such as GPT. Since transformers lack inherent information about the order of tokens in a sequence, positional embeddings are introduced to provide the model with positional information. These embeddings encode the position of each token within the sequence, allowing the model to distinguish between tokens based on their positions. By incorporating positional embeddings, transformers like GPT can effectively capture the sequential nature of data and generate coherent outputs that maintain the correct order of words in the generated text.
+
+### Self-Attention:
+
+![self attention](https://github.com/NotShrirang/GPT-From-Scratch/assets/85283622/a6d785e4-ab00-4da0-a072-791f680d2bb8)
+
+Self-attention, a fundamental mechanism in transformer-based models like GPT, operates by assigning importance scores to different words in a sequence. This process involves three key steps: calculating attention scores, applying softmax to obtain attention weights, and finally combining these weights with the input embeddings to generate contextually informed representations. At its core, self-attention allows the model to focus more on relevant words while de-emphasizing less important ones, facilitating effective learning of contextual dependencies within the input data. This mechanism is pivotal in capturing long-range dependencies and contextual nuances, enabling transformer models to generate long sequences of text.
 
 ## Models:
 
@@ -69,6 +104,8 @@ Make sure you download the weights for Harpoon GPT from [here](https://www.dropb
 
 ### For running Streamlit interface:
 
+![Streamlit Demo](https://github.com/NotShrirang/GPT-From-Scratch/assets/85283622/fa888670-2c44-4f97-a07d-c58473d847d0)
+
 ```sh
 streamlit run app.py
 ```
@@ -78,12 +115,14 @@ streamlit run app.py
 python main.py
 ```
 
-### Build and Run the Docker Container with bash:
+### For using Containerized Version:
+
+#### Build and Run the Docker Container with bash:
 ```sh
 ./run.sh start-dev
 ```
 
-### To stop the Docker Container, run the following command:
+#### To stop the Docker Container, run the following command:
 ```sh
 ./run.sh stop-dev
 ```
