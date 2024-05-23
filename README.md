@@ -22,7 +22,7 @@ QuillGPT is an implementation of the GPT decoder block based on the architecture
   - [Harpoon GPT](#harpoon-gpt)
 - [Getting Started](#getting-started)
   - [Installation](#installation)
-  - [Streamlit Playground](#for-running-streamlit-interface)
+  - [Streamlit Playground](#streamlit-playground)
   - [FastAPI Microservice](#for-running-fastapi-microservice)
   - [Running Docker Container](#for-using-containerized-version)
 - [Usage](#usage)
@@ -102,9 +102,11 @@ pip install -r requirements.txt
 
 Make sure you download the weights for Harpoon GPT from [here](https://www.dropbox.com/scl/fi/vi5z3s17otn0jf7sr40po/Harpoon_Corpus_GPT_model.pt?rlkey=r7oppeslusv736fzmi908le95&st=wak0uf2t&dl=0) before proceeding!
 
-### For running Streamlit interface:
+### Streamlit Playground:
 
-![Streamlit Demo](https://github.com/NotShrirang/GPT-From-Scratch/assets/85283622/fa888670-2c44-4f97-a07d-c58473d847d0)
+It is hosted on Streamlit Cloud Service. You can visit it through the link [here](https://gpt-from-scratch.streamlit.app/).
+
+[![Streamlit Demo](https://github.com/NotShrirang/GPT-From-Scratch/assets/85283622/fa888670-2c44-4f97-a07d-c58473d847d0)](https://gpt-from-scratch.streamlit.app/)
 
 ```sh
 streamlit run app.py
