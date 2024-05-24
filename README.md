@@ -104,9 +104,9 @@ Make sure you download the weights for Harpoon GPT from [here](https://www.dropb
 
 ### Streamlit Playground:
 
-It is hosted on Streamlit Cloud Service. You can visit it through the link [here](https://gpt-from-scratch.streamlit.app/).
+It is hosted on Streamlit Cloud Service. You can visit it through the link [here](https://quillgpt.streamlit.app/).
 
-[![Streamlit Demo](https://github.com/NotShrirang/GPT-From-Scratch/assets/85283622/fa888670-2c44-4f97-a07d-c58473d847d0)](https://gpt-from-scratch.streamlit.app/)
+[![Streamlit Demo](https://github.com/NotShrirang/GPT-From-Scratch/assets/85283622/fa888670-2c44-4f97-a07d-c58473d847d0)](https://quillgpt.streamlit.app/)
 
 ```sh
 streamlit run app.py
