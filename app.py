@@ -6,8 +6,8 @@ from core.tokenizers.tokenizer import Tokenizer
 from core.utils.gptutils import hyperparameters, load_data
 
 st.set_page_config(layout='wide',
-                   page_title='GPT from Scratch',
-                   page_icon='📜',
+                   page_title='QuillGPT',
+                   page_icon='🪶',
                    initial_sidebar_state='expanded'
                    )
 
@@ -21,7 +21,7 @@ models = {
     "GPT": './weights/Harpoon_Corpus_GPT_model_word2.pt',
 }
 
-st.sidebar.header('GPT Model')
+st.sidebar.header('QuillGPT')
 
 st.sidebar.write("This app generates text using a GPT model trained on either the Harpoon corpus or Shakespearean plays.")
 
