@@ -1,3 +1,5 @@
+![QuillGPT-cropped-removebg-preview](https://github.com/NotShrirang/QuillGPT/assets/85283622/2e63d8ce-24f8-4bf0-835a-0c621f1d7400)
+
 # QuillGPT
 
 ![GitHub stars](https://img.shields.io/github/stars/NotShrirang/GPT-From-Scratch?style=social)
