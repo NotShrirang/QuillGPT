@@ -4,11 +4,14 @@
 
 ![GitHub stars](https://img.shields.io/github/stars/NotShrirang/GPT-From-Scratch?style=social)
 ![GitHub forks](https://img.shields.io/github/forks/NotShrirang/GPT-From-Scratch?style=social)
+![GitHub commits](https://img.shields.io/github/commit-activity/t/NotShrirang/QuillGPT)
 ![GitHub issues](https://img.shields.io/github/issues/NotShrirang/GPT-From-Scratch)
 ![GitHub pull requests](https://img.shields.io/github/issues-pr/NotShrirang/GPT-From-Scratch)
 ![GitHub](https://img.shields.io/github/license/NotShrirang/GPT-From-Scratch)
 ![GitHub last commit](https://img.shields.io/github/last-commit/NotShrirang/GPT-From-Scratch)
 ![GitHub repo size](https://img.shields.io/github/repo-size/NotShrirang/GPT-From-Scratch)
+![Streamlit Playground](https://img.shields.io/badge/Streamlit%20App-red?style=flat-rounded-square&logo=streamlit&labelColor=white)
+![Docker Container](https://img.shields.io/badge/docker-blue?style=flat-rounded-square&logo=docker&labelColor=white)
 
 QuillGPT is an implementation of the GPT decoder block based on the architecture from [Attention is All You Need](https://arxiv.org/abs/1706.03762) paper by Vaswani et. al. implemented in PyTorch. Additionally, this repository contains two pre-trained models—Shakespearean GPT and Harpoon GPT—along with their trained weights. For ease of experimentation and deployment, a Streamlit Playground is provided for interactive exploration of these models and FastAPI microservice implemented with Docker containerization for scalable deployment. You'll also find Python scripts for training new GPT models and performing inference on them, along with notebooks showcasing trained models. To facilitate text encoding and decoding, a simple tokenizer is implemented. Explore QuillGPT to utilize these tools and enhance your natural language processing projects!
 
