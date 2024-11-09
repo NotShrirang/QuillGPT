@@ -17,14 +17,7 @@ QuillGPT is an implementation of the GPT decoder block based on the architecture
 
 ## Table of Contents
 
-- [Overview](#overview)
-  - [Decoder Block](#the-decoder-block)
-  - [Input Embeddings](#input-embeddings)
-  - [Positional Embeddings](#positional-embeddings)
-  - [Self-Attention](#self-attention)
 - [Models](#models)
-  - [Shakespearean GPT](#shakespearean-gpt)
-  - [Harpoon GPT](#harpoon-gpt)
 - [Getting Started](#getting-started)
   - [Installation](#installation)
   - [Streamlit Playground](#streamlit-playground)
@@ -33,58 +26,30 @@ QuillGPT is an implementation of the GPT decoder block based on the architecture
 - [Usage](#usage)
   - [Training the GPT Model](#training-the-gpt-model)
   - [Using the Trained Model for Inference](#for-inference)
+- [Explanation](#explanation)
+  - [Decoder Block](#the-decoder-block)
+  - [Input Embeddings](#input-embeddings)
+  - [Positional Embeddings](#positional-embeddings)
+  - [Self-Attention](#self-attention)
 - [License](#license)
 - [Contributing](#contributing)
 - [Support](#support)
 
-## Overview
-
-### The Decoder Block:
-
-<img src="https://github.com/NotShrirang/GPT-From-Scratch/assets/85283622/397049a3-10cc-49b5-8696-f19806b2668e" width=350 alt="Decoder Architecture"/>
-
-The decoder block is a crucial component of the GPT (Generative Pre-trained Transformer) model, it is where GPT actually generates the text. It leverages the self-attention mechanism to process input sequences and generate coherent outputs. Each decoder block consists of multiple layers, including self-attention layers, feed-forward neural networks, and layer normalization. The self-attention layers allow the model to weigh the importance of different words in a sequence, capturing context and dependencies regardless of their positions. This enables the GPT model to generate contextually relevant text.
-
-### Input Embeddings:
-
-![vector embeddings](https://github.com/NotShrirang/GPT-From-Scratch/assets/85283622/29b4c375-c9f0-47b9-9d34-2a21dfdf0be8)
-
-Input embeddings play a crucial role in transformer-based models like GPT by transforming input tokens into meaningful numerical representations. These embeddings serve as the initial input for the model, capturing semantic information about the words in the sequence. The process involves mapping each token in the input sequence to a high-dimensional vector space, where similar tokens are positioned closer together. This enables the model to understand the relationships between different words and effectively learn from the input data. The input embeddings are then fed into the subsequent layers of the model for further processing.
-
-### Positional Embeddings:
-
-![positional_encoding](https://github.com/NotShrirang/GPT-From-Scratch/assets/85283622/90293fb0-8f20-4dc0-adba-8c31a54ef4f4)
-
-In addition to input embeddings, positional embeddings are another vital component of transformer architectures such as GPT. Since transformers lack inherent information about the order of tokens in a sequence, positional embeddings are introduced to provide the model with positional information. These embeddings encode the position of each token within the sequence, allowing the model to distinguish between tokens based on their positions. By incorporating positional embeddings, transformers like GPT can effectively capture the sequential nature of data and generate coherent outputs that maintain the correct order of words in the generated text.
-
-### Self-Attention:
-
-![self attention](https://github.com/NotShrirang/GPT-From-Scratch/assets/85283622/a6d785e4-ab00-4da0-a072-791f680d2bb8)
-
-Self-attention, a fundamental mechanism in transformer-based models like GPT, operates by assigning importance scores to different words in a sequence. This process involves three key steps: calculating attention scores, applying softmax to obtain attention weights, and finally combining these weights with the input embeddings to generate contextually informed representations. At its core, self-attention allows the model to focus more on relevant words while de-emphasizing less important ones, facilitating effective learning of contextual dependencies within the input data. This mechanism is pivotal in capturing long-range dependencies and contextual nuances, enabling transformer models to generate long sequences of text.
-
-## Models:
+## <div align="center">Models</div>
 
 There are two pre-trained models and weights included in this repository.
 
-### Shakespearean GPT
-   - Parameters - 10.7 M
-   - [Weights](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/weights/GPT_model_char.pt)
-   - [Model Config](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/config/shakespearean_config.json)
-   - Training Data contains text from Shakespearean plays. Data - [input.txt](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/data/input.txt)
-   - Trained on character embeddings.
-   - [Training Notebook](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/notebooks/GPT_From_Scratch_CharEmbeddings.ipynb)
-   - Model trained on NVIDIA T4.
-     <br> ![Training and Validation oss over training steps](https://github.com/NotShrirang/GPT-From-Scratch/assets/85283622/133c5064-db26-4b3b-b5f6-95c040a7ff66)
+| Feature                     | Shakespearean GPT                                                                                                                                                      | Harpoon GPT                                                                                                                                |
+|-----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| **Parameters**              | 10.7 M                                                                                                                                                                | 226 M                                                                                                                                     |
+| **Weights**                 | [Weights](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/weights/GPT_model_char.pt)                                                                         | [Weights](https://www.dropbox.com/scl/fi/vi5z3s17otn0jf7sr40po/Harpoon_Corpus_GPT_model.pt?rlkey=r7oppeslusv736fzmi908le95&st=wak0uf2t&dl=0) |
+| **Model Config**            | [Config](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/config/shakespearean_config.json)                                                                  | [Config](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/config/config.json)                                                    |
+| **Training Data**           | Text from Shakespearean plays ([input.txt](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/data/input.txt))                                                 | Random text from books ([corpus.txt](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/data/corpus.txt))                           |
+| **Embedding Type**          | Character embeddings                                                                                                                                                  | Character embeddings                                                                                                                      |
+| **Training Notebook**       | [Notebook](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/notebooks/GPT_From_Scratch_CharEmbeddings.ipynb)                                                 | [Notebook](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/notebooks/GPT_From_Scratch_with_1024_char_embd.ipynb)                |
+| **Hardware**                | NVIDIA T4                                                                                                                                                             | NVIDIA A100                                                                                                                               |
+| **Training & Validation Loss** | ![loss](https://github.com/user-attachments/assets/df89c1f6-d89a-4a3a-8340-edcf7416878c)                                                       |  ![loss](https://github.com/user-attachments/assets/76c5e0d1-a53c-4d0d-ac8f-5529ec3a5008)                                                       |
 
-### Harpoon GPT
-   - Parameters - 226 M
-   - [Weights](https://www.dropbox.com/scl/fi/vi5z3s17otn0jf7sr40po/Harpoon_Corpus_GPT_model.pt?rlkey=r7oppeslusv736fzmi908le95&st=wak0uf2t&dl=0)
-   - [Model Config](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/config/config.json)
-   - Trained on random text from books. Data - [corpus.txt](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/data/corpus.txt)
-   - Trained on character embeddings.
-   - [Training Notebook](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/notebooks/GPT_From_Scratch_with_1024_char_embd.ipynb)
-   - Model trained on NVIDIA A100.
 
 ## Getting Started:
 
@@ -182,6 +147,32 @@ python scripts/inference_gpt.py \
         --max_length 500 \
         --prompt "Once upon a time"
 ```
+
+## <div align="center">Explanation</div>
+
+### The Decoder Block:
+
+<div align="center"><img src="https://github.com/NotShrirang/GPT-From-Scratch/assets/85283622/397049a3-10cc-49b5-8696-f19806b2668e" width=350 alt="Decoder Architecture"/></div>
+
+The decoder block is a crucial component of the GPT (Generative Pre-trained Transformer) model, it is where GPT actually generates the text. It leverages the self-attention mechanism to process input sequences and generate coherent outputs. Each decoder block consists of multiple layers, including self-attention layers, feed-forward neural networks, and layer normalization. The self-attention layers allow the model to weigh the importance of different words in a sequence, capturing context and dependencies regardless of their positions. This enables the GPT model to generate contextually relevant text.
+
+### Input Embeddings:
+
+<div align="center">![vector embeddings](https://github.com/NotShrirang/GPT-From-Scratch/assets/85283622/29b4c375-c9f0-47b9-9d34-2a21dfdf0be8)</div>
+
+Input embeddings play a crucial role in transformer-based models like GPT by transforming input tokens into meaningful numerical representations. These embeddings serve as the initial input for the model, capturing semantic information about the words in the sequence. The process involves mapping each token in the input sequence to a high-dimensional vector space, where similar tokens are positioned closer together. This enables the model to understand the relationships between different words and effectively learn from the input data. The input embeddings are then fed into the subsequent layers of the model for further processing.
+
+### Positional Embeddings:
+
+![positional_encoding](https://github.com/NotShrirang/GPT-From-Scratch/assets/85283622/90293fb0-8f20-4dc0-adba-8c31a54ef4f4)
+
+In addition to input embeddings, positional embeddings are another vital component of transformer architectures such as GPT. Since transformers lack inherent information about the order of tokens in a sequence, positional embeddings are introduced to provide the model with positional information. These embeddings encode the position of each token within the sequence, allowing the model to distinguish between tokens based on their positions. By incorporating positional embeddings, transformers like GPT can effectively capture the sequential nature of data and generate coherent outputs that maintain the correct order of words in the generated text.
+
+### Self-Attention:
+
+![self attention](https://github.com/NotShrirang/GPT-From-Scratch/assets/85283622/a6d785e4-ab00-4da0-a072-791f680d2bb8)
+
+Self-attention, a fundamental mechanism in transformer-based models like GPT, operates by assigning importance scores to different words in a sequence. This process involves three key steps: calculating attention scores, applying softmax to obtain attention weights, and finally combining these weights with the input embeddings to generate contextually informed representations. At its core, self-attention allows the model to focus more on relevant words while de-emphasizing less important ones, facilitating effective learning of contextual dependencies within the input data. This mechanism is pivotal in capturing long-range dependencies and contextual nuances, enabling transformer models to generate long sequences of text.
 
 ## License
 MIT © [Shrirang Mahajan](https://github.com/NotShrirang)
