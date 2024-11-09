@@ -32,9 +32,14 @@ class MultiHeadAttention(nn.Module):
 
     def __init__(self, n_embd, n_head, block_size, dropout):
         super().__init__()
-        head_size = n_embd // n_head
-        self.heads = nn.ModuleList([Head(n_embd, head_size, block_size, dropout) for _ in range(n_head)])
-        self.proj = nn.Linear(head_size * n_head, n_embd)
+        assert n_embd % n_head == 0, f"n_embd ({n_embd}) must be divisible by num_heads ({n_head})"
+
+        self.n_embd = n_embd
+        self.n_head = n_head
+        self.head_size = n_embd // n_head
+
+        self.heads = nn.ModuleList([Head(n_embd, self.head_size, block_size, dropout) for _ in range(n_head)])
+        self.proj = nn.Linear(n_embd, n_embd)
         self.dropout = nn.Dropout(dropout)
 
     def forward(self, x):
