@@ -7,8 +7,8 @@
   "learning_rate": 3e-5,
   "eval_iters": 50,
   "n_embd": 1024,
-  "n_head": 8,
-  "n_layer": 8,
+  "n_head": 12,
+  "n_layer": 18,
   "dropout": 0.3,
   "encode": {
     "\n": 0,

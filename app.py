@@ -37,7 +37,7 @@ else:
 path = models[model_name]
 
 if model_name == "GPT":
-    config_path = './config/config.json'
+    config_path = './config/harpoon_config.json'
     data_path = './data/corpus.txt'
     name = "Harpoon GPT"
     tokenizer: Tokenizer = Tokenizer()

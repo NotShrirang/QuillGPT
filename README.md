@@ -39,17 +39,16 @@ QuillGPT is an implementation of the GPT decoder block based on the architecture
 
 There are two pre-trained models and weights included in this repository.
 
-| Feature                     | Shakespearean GPT                                                                                                                                                      | Harpoon GPT                                                                                                                                |
-|-----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
-| **Parameters**              | 10.7 M                                                                                                                                                                | 226 M                                                                                                                                     |
-| **Weights**                 | [Weights](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/weights/GPT_model_char.pt)                                                                         | [Weights](https://www.dropbox.com/scl/fi/vi5z3s17otn0jf7sr40po/Harpoon_Corpus_GPT_model.pt?rlkey=r7oppeslusv736fzmi908le95&st=wak0uf2t&dl=0) |
-| **Model Config**            | [Config](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/config/shakespearean_config.json)                                                                  | [Config](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/config/config.json)                                                    |
-| **Training Data**           | Text from Shakespearean plays ([input.txt](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/data/input.txt))                                                 | Random text from books ([corpus.txt](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/data/corpus.txt))                           |
-| **Embedding Type**          | Character embeddings                                                                                                                                                  | Character embeddings                                                                                                                      |
-| **Training Notebook**       | [Notebook](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/notebooks/GPT_From_Scratch_CharEmbeddings.ipynb)                                                 | [Notebook](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/notebooks/GPT_From_Scratch_with_1024_char_embd.ipynb)                |
-| **Hardware**                | NVIDIA T4                                                                                                                                                             | NVIDIA A100                                                                                                                               |
-| **Training & Validation Loss** | ![loss](https://github.com/user-attachments/assets/df89c1f6-d89a-4a3a-8340-edcf7416878c)                                                       |  ![loss](https://github.com/user-attachments/assets/76c5e0d1-a53c-4d0d-ac8f-5529ec3a5008)                                                       |
-
+| Feature                        | Shakespearean GPT                                                                                                     | Harpoon GPT                                                                                                                                  |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Parameters**                 | 10.7 M                                                                                                                | 226 M                                                                                                                                        |
+| **Weights**                    | [Weights](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/weights/GPT_model_char.pt)                        | [Weights](https://www.dropbox.com/scl/fi/vi5z3s17otn0jf7sr40po/Harpoon_Corpus_GPT_model.pt?rlkey=r7oppeslusv736fzmi908le95&st=wak0uf2t&dl=0) |
+| **Model Config**               | [Config](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/config/shakespearean_config.json)                  | [Config](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/config/harpoon_config.json)                                               |
+| **Training Data**              | Text from Shakespearean plays ([input.txt](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/data/input.txt)) | Random text from books ([corpus.txt](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/data/corpus.txt))                             |
+| **Embedding Type**             | Character embeddings                                                                                                  | Character embeddings                                                                                                                         |
+| **Training Notebook**          | [Notebook](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/notebooks/GPT_From_Scratch_CharEmbeddings.ipynb) | [Notebook](https://github.com/NotShrirang/GPT-From-Scratch/blob/main/notebooks/GPT_From_Scratch_with_1024_char_embd.ipynb)                   |
+| **Hardware**                   | NVIDIA T4                                                                                                             | NVIDIA A100                                                                                                                                  |
+| **Training & Validation Loss** | ![loss](https://github.com/user-attachments/assets/df89c1f6-d89a-4a3a-8340-edcf7416878c)                              | ![loss](https://github.com/user-attachments/assets/76c5e0d1-a53c-4d0d-ac8f-5529ec3a5008)                                                     |
 
 ## Getting Started:
 
@@ -83,6 +82,7 @@ streamlit run app.py
 ```
 
 ### For running FastAPI Microservice:
+
 ```sh
 python main.py
 ```
@@ -90,11 +90,13 @@ python main.py
 ### For using Containerized Version:
 
 #### Build and Run the Docker Container with bash:
+
 ```sh
 ./run.sh start-dev
 ```
 
 #### To stop the Docker Container, run the following command:
+
 ```sh
 ./run.sh stop-dev
 ```
@@ -106,32 +108,34 @@ python main.py
 To train the GPT model, follow these steps:
 
 1. Prepare data. Put the whole text data into single .txt file and save it.
-2. Write the configurations for transformer and save the file. 
-<br>For example: 
-    ```json
-    {
-      "data_path": "data/corpus.txt",
-      "vocab_size": 135,
-      "batch_size": 32,
-      "block_size": 256,
-      "max_iters": 3000,
-      "eval_interval": 300,
-      "learning_rate": 3e-5,
-      "eval_iters": 50,
-      "n_embd": 1024,
-      "n_head": 12,
-      "n_layer": 18,
-      "dropout": 0.3,
-    }
-    ```
+2. Write the configurations for transformer and save the file.
+   <br>For example:
+   `json
+ {
+   "data_path": "data/corpus.txt",
+   "vocab_size": 135,
+   "batch_size": 32,
+   "block_size": 256,
+   "max_iters": 3000,
+   "eval_interval": 300,
+   "learning_rate": 3e-5,
+   "eval_iters": 50,
+   "n_embd": 1024,
+   "n_head": 12,
+   "n_layer": 18,
+   "dropout": 0.3,
+ }
+ `
 
 3. Train model using script `scripts/train_gpt.py`
+
 ```bash
 python scripts/train_gpt.py \
         --config_path config/config.json \
         --data_path data/corpus.txt \
         --output_dir trained_models
 ```
+
 (You can change the `config_path`, `data_path` and `output_dir` as per your requirements.)
 
 4. The trained model will be saved in the `output_dir` specified in the command.
@@ -175,11 +179,13 @@ In addition to input embeddings, positional embeddings are another vital compone
 Self-attention, a fundamental mechanism in transformer-based models like GPT, operates by assigning importance scores to different words in a sequence. This process involves three key steps: calculating attention scores, applying softmax to obtain attention weights, and finally combining these weights with the input embeddings to generate contextually informed representations. At its core, self-attention allows the model to focus more on relevant words while de-emphasizing less important ones, facilitating effective learning of contextual dependencies within the input data. This mechanism is pivotal in capturing long-range dependencies and contextual nuances, enabling transformer models to generate long sequences of text.
 
 ## License
+
 MIT © [Shrirang Mahajan](https://github.com/NotShrirang)
 
-
 ## Contributing
+
 Feel free to submit pull requests, create issues, or spread the word!
 
 ## Support
+
 Support me by simply starring this repository! ⭐
