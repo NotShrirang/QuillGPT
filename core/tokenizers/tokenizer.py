@@ -39,9 +39,9 @@ class Tokenizer:
         with open(path, 'r', encoding='utf-8') as f:
             text = f.read()
         chars = sorted(list(set(text)))
-        vocab_size = len(chars)
-        stoi = {ch: i for i, ch in enumerate(chars)}
-        itos = {i: ch for i, ch in enumerate(chars)}
+        vocab_size = len(set(chars))
+        stoi = {ch: i for i, ch in enumerate(set(chars))}
+        itos = {i: ch for i, ch in enumerate(set(chars))}
         self.config = {"vocab_size": vocab_size, "encode": stoi, "decode": itos}
         self.stoi = stoi
         self.itos = itos

@@ -80,7 +80,7 @@ print("\nModel is of ", sum(p.numel()
 
 input = torch.tensor([tokenizer.encode(prompt)], dtype=torch.long, device=device)
 
-print("Generating text...")
+print(f"\nGenerating text with {temperature=}")
 
 print("\nPrompt:", colorama.Fore.GREEN, prompt, colorama.Fore.BLUE, end='')
 generated_text = []
